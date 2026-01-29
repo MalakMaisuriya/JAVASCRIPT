@@ -1,0 +1,205 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    padding: 20px;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    color: #fff;
+    text-align: center;
+}
+
+h1 {
+    font-size: 4em;
+    margin: 20px 0;
+    padding: 20px 40px;
+
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+
+    position: relative;
+    z-index: 2;
+}
+
+span.editable {
+    outline: none;
+    cursor: text;
+}
+
+span.colon {
+    user-select: none;
+    pointer-events: none;
+}
+
+p {
+    font-size: 1.5em;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 15px 25px;
+
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+
+    position: relative;
+    z-index: 2;
+}
+
+.controls {
+    margin-top: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.controls button {
+    font-size: 1em;
+    padding: 10px 20px;
+    margin: 5px;
+
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+
+    transition: transform 0.2s ease;
+}
+
+.controls button:hover {
+    transform: scale(1.1);
+}
+
+.run {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.stop {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.reset {
+    background-color: #ffc107;
+    color: #000;
+}
+
+canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+header {
+    text-align: center;
+    padding: 2rem 1rem;
+
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    color: #fff;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    font-size: 1.2rem;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.card {
+    background-color: #fff;
+    color: #333;
+
+    border-radius: 12px;
+    padding: 1.5rem;
+
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.card p {
+    font-size: 0.95rem;
+    color: #555;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn.live {
+    background-color: #667eea;
+    color: #fff;
+}
+
+.btn.live:hover {
+    background-color: #5563d6;
+}
+
+.btn.github {
+    background-color: #333;
+    color: #fff;
+}
+
+.btn.github:hover {
+    background-color: #555;
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2.5em;
+    }
+
+    p {
+        font-size: 1.2em;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    header p {
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,58 @@
+body {
+    font-family: Poppins, sans-serif;
+    margin: 0;
+    color: #ffffff;
+
+    background:
+        linear-gradient(rgba(2, 6, 23, 0.85), rgba(2, 6, 23, 0.85)),
+        url("img/bg.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 14px;
+    text-align: left;
+}
+
+tbody tr:hover {
+    background: rgba(196, 23, 23, 0.05);
+    cursor: pointer;
+}
+
+.back {
+    margin-top: 30px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}

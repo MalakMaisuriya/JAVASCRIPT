@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Country Details</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1 id="countryName"></h1>
+      <p id="subtitle"></p>
+    </header>
+
+    <div class="container">
+      <table id="statesTable" style="display: none">
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Confirmed</th>
+            <th>Deaths</th>
+            <th>Recovered</th>
+          </tr>
+        </thead>
+        <tbody id="statesBody"></tbody>
+      </table>
+
+      <button class="back" onclick="goBack()">⬅ Back</button>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const country = params.get("country");
+
+      document.getElementById("countryName").innerText = country;
+      document.getElementById("subtitle").innerText =
+        country.toLowerCase() === "india"
+          ? "State-wise COVID-19 Data"
+          : "State data available only for India";
+
+      if (country && country.toLowerCase() === "india") {
+        document.getElementById("statesTable").style.display = "table";
+
+        fetch("https://disease.sh/v3/covid-19/gov/india")
+          .then((res) => res.json())
+          .then((data) => {
+            const tbody = document.getElementById("statesBody");
+            tbody.innerHTML = "";
+
+            data.states.forEach((state) => {
+              const tr = document.createElement("tr");
+
+              tr.innerHTML = `
+          <td>${state.state}</td>
+          <td>${state.cases.toLocaleString()}</td>
+          <td>${state.deaths.toLocaleString()}</td>
+          <td>${state.recovered.toLocaleString()}</td>
+        `;
+
+              tbody.appendChild(tr);
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            alert("State data load nahi ho raha");
+          });
+      }
+
+      function goBack() {
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown with Celebration & Alarm</title>
+<link rel="icon" href="aseest/image/Mk-logo-modified.png" type="image/png">
+<link rel="stylesheet" href="aseest/css/style.css">
+</head>
+<body>
+
+<h1 id="countdown">
+  <span class="editable" contenteditable="true">00</span><span class="colon">:</span>
+  <span class="editable" contenteditable="true">00</span><span class="colon">:</span>
+  <span class="editable" contenteditable="true">00</span>
+</h1>
+
+<div class="controls">
+  <button class="run">Run</button>
+  <button class="stop">Stop</button>
+  <button class="reset">Reset</button>
+</div>
+
+<p id="quote">"Motivational quote will appear here."</p>
+
+<audio id="alarmAudio" src="gentle-acoustic-guitar-143071.mp3" preload="auto"></audio>
+<canvas id="confetti"></canvas>
+
+<script>
+const countdownElement = document.getElementById('countdown');
+const [hoursSpan, minutesSpan, secondsSpan] = countdownElement.querySelectorAll('.editable');
+const runBtn = document.querySelector('.run');
+const stopBtn = document.querySelector('.stop');
+const resetBtn = document.querySelector('.reset');
+const alarmAudio = document.getElementById('alarmAudio');
+const canvas = document.getElementById('confetti');
+const ctx = canvas.getContext('2d');
+
+let countdownInterval = null;
+let remainingTime = 0;
+let confettiParticles = [];
+let confettiAnimationFrame = null;
+let alarmInterval = null;
+
+
+function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+
+class Confetti{ 
+  constructor(){ 
+    this.x=Math.random()*canvas.width; 
+    this.y=Math.random()*-canvas.height; 
+    this.size=Math.random()*7+3; 
+    this.speedY=Math.random()*3+2; 
+    this.speedX=Math.random()*5-2.5; 
+    this.color=`hsl(${Math.random()*360},100%,50%)`; 
+  } 
+  update(){ 
+    this.y+=this.speedY; 
+    this.x+=this.speedX; 
+    if(this.y>canvas.height) this.y=-this.size; 
+  } 
+  draw(){ 
+    ctx.fillStyle=this.color; 
+    ctx.fillRect(this.x,this.y,this.size,this.size); 
+  } 
+}
+function createConfetti(){ 
+  confettiParticles=[]; 
+  for(let i=0;i<200;i++) confettiParticles.push(new Confetti()); 
+}
+function animateConfetti(){ 
+  ctx.clearRect(0,0,canvas.width,canvas.height); 
+  confettiParticles.forEach(p=>{p.update();p.draw();}); 
+  if(confettiParticles.length>0) confettiAnimationFrame=requestAnimationFrame(animateConfetti); 
+}
+function stopConfetti(){ 
+  if(confettiAnimationFrame) cancelAnimationFrame(confettiAnimationFrame); 
+  confettiAnimationFrame=null; 
+  confettiParticles=[]; 
+  ctx.clearRect(0,0,canvas.width,canvas.height); 
+}
+
+
+function updateCountdownDisplay(time){ 
+  const h=Math.floor(time/3600); 
+  const m=Math.floor((time%3600)/60); 
+  const s=time%60; 
+  hoursSpan.innerText=String(h).padStart(2,'0'); 
+  minutesSpan.innerText=String(m).padStart(2,'0'); 
+  secondsSpan.innerText=String(s).padStart(2,'0'); 
+}
+
+
+function playAlarmGradually(audio){
+  if(alarmInterval) clearInterval(alarmInterval);
+  audio.volume=0.3; audio.currentTime=0; audio.play().catch(()=>{});
+  setTimeout(()=>{audio.volume=0.5;},1000);
+  setTimeout(()=>{audio.volume=0.7;},2000);
+  setTimeout(()=>{audio.volume=1.0;},3000);
+  alarmInterval=setInterval(()=>{ audio.currentTime=0; audio.volume=1.0; audio.play().catch(()=>{}); },5000);
+}
+function stopAlarm(){ 
+  if(alarmInterval) clearInterval(alarmInterval); 
+  alarmInterval=null; 
+  alarmAudio.pause(); 
+  alarmAudio.currentTime=0; 
+}
+
+function runCountdown(){
+  const h=parseInt(hoursSpan.innerText),
+        m=parseInt(minutesSpan.innerText),
+        s=parseInt(secondsSpan.innerText);
+
+  
+  if ((h === 0 && m === 0 && s === 0) || isNaN(h) || isNaN(m) || isNaN(s)) {
+    alert("⏰ Please set a valid time before starting the countdown!");
+    return;
+  }
+
+  stopCountdown();
+
+  remainingTime=h*3600 + m*60 + s;
+
+  countdownInterval=setInterval(()=>{
+    if(remainingTime<=0){
+      clearInterval(countdownInterval); countdownInterval=null; remainingTime=0;
+      updateCountdownDisplay(remainingTime);
+      createConfetti(); animateConfetti(); playAlarmGradually(alarmAudio);
+      return;
+    }
+    remainingTime--; 
+    updateCountdownDisplay(remainingTime);
+  },1000);
+}
+
+
+function stopCountdown(){ 
+  if(countdownInterval) clearInterval(countdownInterval); 
+  countdownInterval=null; 
+  stopAlarm(); 
+  stopConfetti(); 
+}
+
+
+function resetCountdown(){ 
+  stopCountdown(); 
+  hoursSpan.innerText="00"; 
+  minutesSpan.innerText="00"; 
+  secondsSpan.innerText="00"; 
+  remainingTime=0; 
+}
+
+
+[hoursSpan, minutesSpan, secondsSpan].forEach(span=>{
+  span.addEventListener('keydown',e=>{ 
+    if(e.key==='Enter'){ e.preventDefault(); runCountdown(); }
+  });
+});
+
+
+runBtn.addEventListener('click', runCountdown);
+stopBtn.addEventListener('click', stopCountdown);
+resetBtn.addEventListener('click', resetCountdown);
+
+
+const quotes=["Believe you can and you're halfway there.","Your limitation—it's only your imagination.","Push yourself, because no one else is going to do it for you.","Great things never come from comfort zones.","Dream it. Wish it. Do it.","Success doesn't just find you. You have to go out and get it."];
+const quoteElement=document.getElementById('quote');
+function changeQuote(){ quoteElement.innerText=quotes[Math.floor(Math.random()*quotes.length)]; }
+setInterval(changeQuote,5000); changeQuote();
+
+</script>
+
+</body>
+</html>
