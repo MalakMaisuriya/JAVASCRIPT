@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LowerCase Converter</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="page-container">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        
+        <div class="page-header">
+            <h1>LowerCase Converter</h1>
+            <p>Convert any text to lowercase</p>
+        </div>
+
+        <div class="form-group">
+            <label for="textInput">Enter Text:</label>
+            <textarea id="textInput" placeholder="e.g., HELLO WORLD"></textarea>
+        </div>
+
+        <div class="button-group">
+            <button class="btn-primary" onclick="convertToLowerCase()">Convert to LowerCase</button>
+            <a href="index.html" class="btn-home">Home</a>
+        </div>
+
+        <div id="resultBox" class="result-box">
+            <h3>Result</h3>
+            <p><strong>Original:</strong></p>
+            <div class="result-text" id="originalText"></div>
+            <p style="margin-top: 15px;"><strong>Converted:</strong></p>
+            <div class="result-text" id="convertedText"></div>
+        </div>
+
+        <div id="errorMessage" class="error-message"></div>
+    </div>
+
+    <script>
+        function convertToLowerCase() {
+            var textInput = document.getElementById('textInput').value;
+            var resultBox = document.getElementById('resultBox');
+            var errorBox = document.getElementById('errorMessage');
+            var originalText = document.getElementById('originalText');
+            var convertedText = document.getElementById('convertedText');
+
+            errorBox.classList.remove('show');
+
+            if (textInput.trim() === '') {
+                errorBox.textContent = 'Please enter some text';
+                errorBox.classList.add('show');
+                resultBox.classList.remove('show');
+                return;
+            }
+
+            var lowerText = textInput.toLowerCase();
+
+            originalText.textContent = textInput;
+            convertedText.textContent = lowerText;
+            resultBox.classList.add('show');
+        }
+
+        // Allow Ctrl+Enter to trigger conversion
+        document.getElementById('textInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                convertToLowerCase();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Numbers in Array</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="page-container">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        
+        <div class="page-header">
+            <h1>Prime Numbers in Array</h1>
+            <p>Find all prime numbers in an array</p>
+        </div>
+
+        <div class="form-group">
+            <label for="arrayInput">Enter Numbers (comma-separated):</label>
+            <input type="text" id="arrayInput" placeholder="e.g., 2, 3, 4, 5, 10, 11, 13, 15, 17">
+        </div>
+
+        <div class="button-group">
+            <button class="btn-primary" onclick="findPrimeNumbers()">Find Primes</button>
+            <a href="index.html" class="btn-home">Home</a>
+        </div>
+
+        <div id="resultBox" class="result-box">
+            <h3>Result</h3>
+            <div id="resultContent"></div>
+        </div>
+
+        <div id="errorMessage" class="error-message"></div>
+    </div>
+
+    <script>
+        function isPrime(num) {
+            if (num <= 1) return false;
+            if (num === 2) return true;
+            if (num % 2 === 0) return false;
+
+            for (var i = 3; i * i <= num; i += 2) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+
+        function findPrimeNumbers() {
+            var arrayInputStr = document.getElementById('arrayInput').value;
+            var resultBox = document.getElementById('resultBox');
+            var resultContent = document.getElementById('resultContent');
+            var errorBox = document.getElementById('errorMessage');
+
+            errorBox.classList.remove('show');
+
+            if (arrayInputStr.trim() === '') {
+                errorBox.textContent = 'Please enter some numbers';
+                errorBox.classList.add('show');
+                resultBox.classList.remove('show');
+                return;
+            }
+
+            // Parse input
+            var arrayStr = arrayInputStr.split(',');
+            var numbers = [];
+
+            for (var i = 0; i < arrayStr.length; i++) {
+                var num = parseInt(arrayStr[i].trim());
+                if (!isNaN(num)) {
+                    numbers.push(num);
+                }
+            }
+
+            if (numbers.length === 0) {
+                errorBox.textContent = 'Please enter valid numbers';
+                errorBox.classList.add('show');
+                resultBox.classList.remove('show');
+                return;
+            }
+
+            // Find prime numbers
+            var primeNumbers = [];
+            for (var i = 0; i < numbers.length; i++) {
+                if (isPrime(numbers[i])) {
+                    primeNumbers.push(numbers[i]);
+                }
+            }
+
+            var primeText = primeNumbers.length > 0 ? primeNumbers.join(', ') : 'None';
+
+            resultContent.innerHTML = '<p><strong>Original Array:</strong></p>' +
+                                     '<p style="background: white; padding: 10px; border-radius: 5px;">' + 
+                                     numbers.join(', ') + '</p>' +
+                                     '<p style="margin-top: 15px;"><strong>Prime Numbers Found:</strong></p>' +
+                                     '<p style="background: white; padding: 10px; border-radius: 5px; font-size: 1.1rem; color: #667eea;">' + 
+                                     primeText + '</p>' +
+                                     '<p style="margin-top: 15px;"><strong>Count:</strong> ' + primeNumbers.length + ' prime number(s)</p>';
+
+            resultBox.classList.add('show');
+        }
+
+        // Allow Enter to trigger search
+        document.getElementById('arrayInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                findPrimeNumbers();
+            }
+        });
+    </script>
+</body>
+</html>

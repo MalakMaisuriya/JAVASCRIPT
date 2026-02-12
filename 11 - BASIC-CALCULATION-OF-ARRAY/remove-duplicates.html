@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Duplicate Elements</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="page-container">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        
+        <div class="page-header">
+            <h1>Remove Duplicate Elements</h1>
+            <p>Remove duplicate values from an array</p>
+        </div>
+
+        <div class="form-group">
+            <label for="arrayInput">Enter Numbers or Text (comma-separated):</label>
+            <input type="text" id="arrayInput" placeholder="e.g., apple, banana, apple, orange, banana, grape">
+        </div>
+
+        <div class="button-group">
+            <button class="btn-primary" onclick="removeDuplicates()">Remove Duplicates</button>
+            <a href="index.html" class="btn-home">Home</a>
+        </div>
+
+        <div id="resultBox" class="result-box">
+            <h3>Result</h3>
+            <div id="resultContent"></div>
+        </div>
+
+        <div id="errorMessage" class="error-message"></div>
+    </div>
+
+    <script>
+        function removeDuplicates() {
+            var arrayInputStr = document.getElementById('arrayInput').value;
+            var resultBox = document.getElementById('resultBox');
+            var resultContent = document.getElementById('resultContent');
+            var errorBox = document.getElementById('errorMessage');
+
+            errorBox.classList.remove('show');
+
+            if (arrayInputStr.trim() === '') {
+                errorBox.textContent = 'Please enter some values';
+                errorBox.classList.add('show');
+                resultBox.classList.remove('show');
+                return;
+            }
+
+            // Parse input
+            var elements = arrayInputStr.split(',');
+            var cleanElements = [];
+
+            for (var i = 0; i < elements.length; i++) {
+                cleanElements.push(elements[i].trim());
+            }
+
+            // Remove duplicates using object to store unique values
+            var uniqueElements = [];
+            var seen = {};
+
+            for (var i = 0; i < cleanElements.length; i++) {
+                var element = cleanElements[i];
+                if (!seen[element]) {
+                    seen[element] = true;
+                    uniqueElements.push(element);
+                }
+            }
+
+            var duplicatesRemoved = cleanElements.length - uniqueElements.length;
+
+            resultContent.innerHTML = '<p><strong>Original Array:</strong></p>' +
+                                     '<p style="background: white; padding: 10px; border-radius: 5px;">' + 
+                                     cleanElements.join(', ') + '</p>' +
+                                     '<p style="margin-top: 15px;"><strong>After Removing Duplicates:</strong></p>' +
+                                     '<p style="background: white; padding: 10px; border-radius: 5px; color: #667eea; font-weight: bold;">' + 
+                                     uniqueElements.join(', ') + '</p>' +
+                                     '<p style="margin-top: 15px;"><strong>Statistics:</strong></p>' +
+                                     '<p style="background: white; padding: 10px; border-radius: 5px;">' +
+                                     '  <strong>Original Count:</strong> ' + cleanElements.length + '<br>' +
+                                     '  <strong>Unique Count:</strong> ' + uniqueElements.length + '<br>' +
+                                     '  <strong>Duplicates Removed:</strong> ' + duplicatesRemoved +
+                                     '</p>';
+
+            resultBox.classList.add('show');
+        }
+
+        // Allow Enter to trigger removal
+        document.getElementById('arrayInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                removeDuplicates();
+            }
+        });
+    </script>
+</body>
+</html>
