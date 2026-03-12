@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="assets/img/Mk-logo-modified.png" type="image/png" />
+    <title>Recipe Book</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header>
+      <h1>Recipe Book Dashboard 🍲</h1>
+    </header>
+
+    <div class="container">
+      <div class="card form-card">
+        <h2>Add Recipe</h2>
+
+        <input type="text" id="title" placeholder="Recipe Title" />
+
+        <textarea id="ingredients" placeholder="Ingredients"></textarea>
+
+        <textarea id="instructions" placeholder="Instructions"></textarea>
+
+        <select id="cuisine">
+          <option value="">Select Cuisine</option>
+          <option>Indian</option>
+          <option>Italian</option>
+          <option>Chinese</option>
+          <option>Mexican</option>
+          <option>Other</option>
+        </select>
+
+        <button onclick="addRecipe()">Add Recipe</button>
+      </div>
+
+      <div class="card search-card">
+        <input
+          type="text"
+          id="search"
+          placeholder="Search by title or ingredients"
+        />
+
+        <select id="filterCuisine">
+          <option value="">All Cuisines</option>
+          <option>Indian</option>
+          <option>Italian</option>
+          <option>Chinese</option>
+          <option>Mexican</option>
+          <option>Other</option>
+        </select>
+
+        <button onclick="displayRecipes()">Search</button>
+      </div>
+
+      <div id="recipeList" class="recipe-grid"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

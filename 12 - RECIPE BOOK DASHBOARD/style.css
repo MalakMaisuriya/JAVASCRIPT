@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #E8F5BD;
+    color: #2d3748;
+    min-height: 100vh;
+}
+
+header {
+    background: #84B179;
+    padding: 25px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 25px;
+}
+
+.card {
+    background: #C7EABB;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.form-card input,
+.form-card textarea,
+.form-card select {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    background: white;
+    color: #333;
+}
+
+textarea {
+    min-height: 90px;
+    resize: none;
+}
+
+button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #84B179;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #A2CB8B;
+    transform: scale(1.05);
+}
+
+.search-card {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.search-card input,
+.search-card select {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.recipe {
+    background: #A2CB8B;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
+    position: relative;
+}
+
+.recipe:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+}
+
+.recipe h3 {
+    color: #2f5233;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.recipe p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 6px;
+}
+
+.actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.edit {
+    background: #84B179;
+}
+
+.edit:hover {
+    background: #6f9f64;
+}
+
+.delete {
+    background: #d9534f;
+}
+
+.delete:hover {
+    background: #c9302c;
+}
+
+@media(max-width:768px) {
+
+    .search-card {
+        flex-direction: column;
+    }
+
+    header {
+        font-size: 22px;
+    }
+
+}
